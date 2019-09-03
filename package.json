@@ -1,0 +1,20 @@
+{
+  "name": "mintopp",
+  "version": "1.0.0",
+  "description": "Convert Mintos CSV data to importable Portfolio Performance data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Mintos",
+    "Portfolio",
+    "Performance",
+    "finance"
+  ],
+  "author": "Markus Siering",
+  "license": "MIT",
+  "dependencies": {
+    "csvtojson": "^2.0.10"
+  }
+}

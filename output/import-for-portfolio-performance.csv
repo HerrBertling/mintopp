@@ -1,0 +1,7 @@
+Datum;Typ;Wert;Buchungswährung;Steuern;Stück;ISIN;WKN;Ticker-Symbol;Wertpapiername;Notiz
+2019-02-06T10:13:02;Einlage;250;EUR;;;;;;;ID: 609201234, Incoming client payment
+2019-02-07T23:30:00;Zinsen;0,0000183108735582;EUR;;;;;;;ID: 611521234, Interest income Loan ID: 8161234-01
+2019-02-09T23:30:00;Zinsen;0,005537244681;EUR;;;;;;;ID: 614031234, Interest income Loan ID: 8161234-01
+2019-02-11T05:25:51;Zinsen;0,013333333333332;EUR;;;;;;;ID: 615501234, Interest income on rebuy Rebuy purpose: agreement_prolongation Loan ID: 9391234-01
+2019-02-12T11:35:04;Einlage;50;EUR;;;;;;;ID: 617281234, Incoming client payment
+2019-02-13T06:35:03;Zinsen;0,0034999999999991;EUR;;;;;;;ID: 619081234, Interest income on rebuy Rebuy purpose: early_repayment Loan ID: 9651234-01
