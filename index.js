@@ -24,6 +24,14 @@ const parseableNumber = number => number.replace(',', '.')
 const parseableDate = date => date.replace(' ', 'T')
 const numberToCommaSeparatedString = number => number.replace('.', ',')
 
+const isCreditInvest = string => {
+  return (
+    string.includes('Investment principal increase') ||
+    string.includes('Investment principal rebuy') ||
+    string.includes('Investment principal repayment')
+  )
+}
+
 const getTransactionType = string => {
   if (
     string.includes('Incoming client payment') ||
@@ -41,6 +49,7 @@ const getTransactionType = string => {
   if (string.includes('Reversed incoming client payment')) {
     return TYPE_WITHDRAWAL
   }
+  console.log(`######## Could not process: ${string}`)
   return ''
 }
 
@@ -49,18 +58,20 @@ async function transformCsvExport(path) {
     delimiter: ';'
   }).fromFile(path)
   let csvData = CSV_HEADER
-  data.forEach(datum => {
-    const interest = parseableNumber(datum[TRANSACTION_TURNOVER])
-    const noteString = `ID: ${datum[TRANSACTION_ID]}, ${datum[TRANSACTION_DETAILS]}`
-    const entry = {
-      amount: numberToCommaSeparatedString(interest),
-      date: parseableDate(datum[TRANSACTION_DATE]),
-      type: getTransactionType(datum[TRANSACTION_DETAILS]),
-      currency: datum[TRANSACTION_CURRENCY],
-      note: noteString
-    }
-    csvData += `${entry.date};${entry.type};${entry.amount};${entry.currency};;;;;;;${entry.note}\n`
-  })
+  data
+    .filter(datum => !isCreditInvest(datum[TRANSACTION_DETAILS]))
+    .forEach(datum => {
+      const interest = parseableNumber(datum[TRANSACTION_TURNOVER])
+      const noteString = `ID: ${datum[TRANSACTION_ID]}, ${datum[TRANSACTION_DETAILS]}`
+      const entry = {
+        amount: numberToCommaSeparatedString(interest),
+        date: parseableDate(datum[TRANSACTION_DATE]),
+        type: getTransactionType(datum[TRANSACTION_DETAILS]),
+        currency: datum[TRANSACTION_CURRENCY],
+        note: noteString
+      }
+      csvData += `${entry.date};${entry.type};${entry.amount};${entry.currency};;;;;;;${entry.note}\n`
+    })
   fs.writeFile(csvOutputPath, csvData, function(err) {
     if (err) {
       return console.log(err)
