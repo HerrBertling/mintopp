@@ -2,31 +2,16 @@ const fs = require('fs')
 const path = require('path')
 const csv = require('csvtojson')
 
-const getOptions = argv => {
-  const options = argv
-    .splice(2)
-    .reduce((acc, el, i, src) => {
-      const next = src[i + 1]
-      if (/^--/.test(el) && next && !/^--/.test(next)) {
-        el = el + '=' + next
-        acc.push(el)
-        return acc
-      }
-
-      if (/^--/.test(el)) {
-        acc.push(el)
-      }
-
-      return acc
-    }, [])
-    .reduce((acc, el) => {
-      const cleaned = el.replace(/^--/, '').split('=')
-      acc[cleaned[0]] = cleaned[1] || true
-      return acc
-    }, {})
-
-  return options
-}
+const {
+  getOptions,
+  isCreditInvest,
+  isDeposit,
+  isInterest,
+  isWithdrawal,
+  numberToCommaSeparatedString,
+  parseableDate,
+  parseableNumber
+} = require('./helper/')
 
 const options = getOptions(process.argv)
 
@@ -53,37 +38,6 @@ if (!options.input) {
 
 const csvFilePath = path.join(__dirname, INPUT_PATH)
 const csvOutputPath = path.join(__dirname, OUTPUT_PATH)
-
-const parseableNumber = number => number.replace(',', '.')
-const parseableDate = date => date.replace(' ', 'T')
-const numberToCommaSeparatedString = number => number.replace('.', ',')
-
-const isCreditInvest = string => {
-  return (
-    string.includes('Investment principal increase') ||
-    string.includes('Investment principal rebuy') ||
-    string.includes('Investment principal repayment')
-  )
-}
-
-const isDeposit = string => {
-  return (
-    string.includes('Incoming client payment') ||
-    string.includes('Affiliate bonus')
-  )
-}
-
-const isInterest = string => {
-  return (
-    string.includes('Interest income') ||
-    string.includes('Late payment fee income') ||
-    string.includes('Delayed interest income')
-  )
-}
-
-const isWithdrawal = string => {
-  return string.includes('Reversed incoming client payment')
-}
 
 const getTransactionType = string => {
   if (isDeposit(string)) {
