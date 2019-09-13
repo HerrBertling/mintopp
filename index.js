@@ -24,7 +24,7 @@ const TYPE_INTEREST = 'Zinsen'
 const TYPE_DEPOSIT = 'Einlage'
 const TYPE_WITHDRAWAL = 'Entnahme'
 
-const DELIMITER = options.delimiter || ','
+const DELIMITER = options.delimiter || ';'
 const INPUT_PATH = options.input
 const OUTPUT_PATH =
   options.output || 'output/import-for-portfolio-performance.csv'

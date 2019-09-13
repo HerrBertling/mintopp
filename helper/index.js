@@ -29,6 +29,9 @@ const parseableDate = date => date.replace(' ', 'T')
 const numberToCommaSeparatedString = number => number.replace('.', ',')
 
 const isCreditInvest = string => {
+  if (!string) {
+    return false
+  }
   return (
     string.includes('Investment principal increase') ||
     string.includes('Investment principal rebuy') ||
