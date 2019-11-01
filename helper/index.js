@@ -28,30 +28,39 @@ const parseableNumber = number => number.replace(',', '.')
 const parseableDate = date => date.replace(' ', 'T')
 const numberToCommaSeparatedString = number => number.replace('.', ',')
 
+const checkStringAgainstArray = (string, array) => {
+  return array.some(item => string.includes(item))
+}
+
 const isCreditInvest = string => {
   if (!string) {
     return false
   }
-  return (
-    string.includes('Investment principal increase') ||
-    string.includes('Investment principal rebuy') ||
-    string.includes('Investment principal repayment')
-  )
+  return checkStringAgainstArray(string, [
+    'Investment principal increase',
+    'Investment principal rebuy',
+    'Investment principal repayment',
+    'investment in loan',
+    'secondary market transaction'
+  ])
 }
 
 const isDeposit = string => {
-  return (
-    string.includes('Incoming client payment') ||
-    string.includes('Affiliate bonus')
-  )
+  return checkStringAgainstArray(string, [
+    'Incoming client payment',
+    'Affiliate bonus',
+    'principal received'
+  ])
 }
 
 const isInterest = string => {
-  return (
-    string.includes('Interest income') ||
-    string.includes('Late payment fee income') ||
-    string.includes('Delayed interest income')
-  )
+  return checkStringAgainstArray(string, [
+    'Interest income',
+    'Late payment fee income',
+    'Delayed interest income',
+    'interest received',
+    'late fees received'
+  ])
 }
 
 const isWithdrawal = string => {
