@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "ava": "^2.3.0",
-    "electron": "^6.0.8",
+    "electron": "^13.6.6",
     "nyc": "^14.1.1"
   }
 }
